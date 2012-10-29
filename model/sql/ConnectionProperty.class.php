@@ -10,15 +10,15 @@ class ConnectionProperty{
         //Atributos conexion Local
 	private static $hostLocal = '127.0.0.1';
 	private static $userLocal = 'root';
-	private static $passwordLocal = 'ROOT';
+	private static $passwordLocal = 'root';
 	private static $databaseLocal = 'analytics_superate';
         
         //Atributos conexion Plataforma 
 	private static $hostPlataforma = '127.0.0.1';
 	//private static $hostPlataforma = '10.179.224.134';
 	private static $userPlataforma = 'root';
-	private static $passwordPlataforma = 'ROOT';
-	private static $databasePlataforma = 'moodle_universidad_db';   
+	private static $passwordPlataforma = 'root';
+	private static $databasePlataforma = 'universidad_moodle2_1';   
         public static $prefijo = 'universidad_';
 
         //prefijo base datos plataforma
