@@ -9,5 +9,7 @@
         <div style="alignment-adjust: center">
             <h3><?php echo $blog_heading; ?></h3>
         </div>    
+		
+		<div></div>
     </body>
 </html>
