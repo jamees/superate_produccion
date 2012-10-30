@@ -47,15 +47,16 @@ class monitoreoController Extends baseController {
 //    }
 
         $intentos = DAOFactory::getIntentosDAO()->queryBuscaIntentosRealTime();
+        //print_r($intentos);
+        $usuarios = $this->obtenerUsuarios($intentos);
 
         //print_r($intentos);
         if (count($intentos) > 0) {
-
-            $usuarios = $this->obtenerUsuarios($intentos);
-            
             foreach ($usuarios as $usuario) {
-                
-                echo $usuario->nombre." ".$usuario->apellido." | ";
+                echo $usuario->nombre . " " . $usuario->apellido . " <br> ";
+                foreach ($usuario->respuestas as $respuesta) {
+                    echo $respuesta->numeroPregunta . " | " . round($respuesta->puntajeObtenido, 2) . "<br>";
+                }
             }
 //            foreach ($usuarios as $intento) {
 //
@@ -76,36 +77,63 @@ class monitoreoController Extends baseController {
 
     public function obtenerUsuarios($intentos) {
 
-//    var $intento;
-//    var $notaFinalQuiz;
-//    var $numeroPregunta;
-//    var $tipoPregunta;
-//    var $puntajeMaximo;
-//    var $estado;
-//    var $puntajeObtenido;
-//    var $respCorrecta;
-//    var $respuesta; 
-//    var $username; 
-//    var $nombre;
-//    var $apellido;
-
         $resultado_usuarios = array();
-        $intentos = array();
+        $resultado_global = array();
+        $intentos_aux = $intentos;
+
         foreach ($intentos as $intento) {
-            
-            $usuario = new Usuario();
-            $usuario->nombre = $intento->nombre;
-            $usuario->apellido = $intento->apellido;
-            $usuario->username = $intento->username;
-            
-            //Si el usuario no esta en la lista
-            if (!in_array($usuario, $resultado_usuarios)) {
-                $resultado_usuarios = $usuario;
-            }else{
-                //Agregar intento
+            $estudiante = new Estudiante();
+            $estudiante->nombre = $intento->nombre;
+            $estudiante->apellido = $intento->apellido;
+            $estudiante->username = $intento->username;
+            //Si el usuario no esta en la lista lo agrego y busco sus respuestas
+           print_r(sizeof($resultado_usuarios)." - ");
+           print_r($estudiante);
+           print_r("<br>");
+           print_r(!in_array($estudiante, $resultado_usuarios));
+           print_r("<br>");
+           print_r($resultado_usuarios);
+           print_r("<br>");
+            if (in_array($estudiante, $resultado_usuarios) == 0) {
+
+                $respuestas_usuario = array();
+                //Recorro todos los intentos del usuario y los agrego a su lita
+                print_r(sizeof($intentos_aux)." | ");
+                for ($i = 0; $i < sizeof($intentos_aux);$i++) {
+                  
+                    //Si encontre una respuesta del estudiante, se agrega
+                    if ($intentos_aux[$i]->username == $estudiante->username) {
+                        
+                        $respuesta = new Respuesta();
+                        $respuesta->estado = $intentos_aux[$i]->estado;
+                        $respuesta->intento = $intentos_aux[$i]->intento;
+                        $respuesta->notaFinalQuiz = $intentos_aux[$i]->notaFinalQuiz;
+                        $respuesta->numeroPregunta = $intentos_aux[$i]->numeroPregunta;
+                        $respuesta->puntajeMaximo = $intentos_aux[$i]->puntajeMaximo;
+                        $respuesta->puntajeObtenido = $intentos_aux[$i]->puntajeObtenido;
+                        $respuesta->respCorrecta = $intentos_aux[$i]->respCorrecta;
+                        $respuesta->respuesta = $intentos_aux[$i]->respuesta;
+                        $respuesta->tipoPregunta = $intentos_aux[$i]->tipoPregunta;
+                        if (!in_array($respuesta, $respuestas_usuario)) {
+                            $respuestas_usuario[] = $respuesta;
+                        }
+                    }else{
+                        echo "No son iguales <br>";
+                    }
+                }
+                
+                //Agrego a resultado_usuarios la lista de los usuarios unicos
+                $resultado_usuarios[] = $estudiante;
+
+                //Agrego a resultado_global la lista de los usuarios con sus intentos
+                $estudiante_aux = $estudiante;
+                $estudiante_aux->respuestas = $respuestas_usuario;
+                $resultado_global[] = $estudiante_aux;
+            } else {
+              
             }
         }
-        return $resultado_usuarios;
+        return $resultado_global;
     }
 
 }

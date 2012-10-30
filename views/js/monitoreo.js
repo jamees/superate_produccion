@@ -9,7 +9,7 @@ var auto_refresh = setInterval(
     function()
     {
         $("#mostrarMonitoreo").fadeOut("slow").load("getIntentos").fadeIn("slow");
-    }, 20000);
+    }, 200000);
 
 //Al iniciar cargar el monitoreo
 

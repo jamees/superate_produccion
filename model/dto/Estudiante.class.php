@@ -8,9 +8,9 @@
 /**
  * Description of Cursos
  *
- * @author James Cortes
+ * @author JamesCortes
  */
-class Usuario {
+class Estudiante {
     var $nombre;
     var $apellido;
     var $correo;
@@ -18,7 +18,7 @@ class Usuario {
     var $secretaria;
     var $url_imagen;
     var $username;
-    var $intentos;
+    var $respuestas;
 }
 
 ?>

@@ -39,13 +39,13 @@ class IntentosMySqlDAO implements IntentosDAO {
                 us.firstname AS nombre,
                 us.lastname AS apellido
                 FROM ' . ConnectionProperty::$prefijo . 'user us
-                JOIN ' . ConnectionProperty::$prefijo . 'quiz_attempts quiza ON us.id = quiza.userid and quiza.quiz = 31 
+                JOIN ' . ConnectionProperty::$prefijo . 'quiz_attempts quiza ON us.id = quiza.userid and quiza.quiz = 31 and us.username in ("13347412", "18237269") 
                 JOIN ' . ConnectionProperty::$prefijo . 'question_usages qu ON qu.id = quiza.uniqueid
                 JOIN ' . ConnectionProperty::$prefijo . 'question_attempts qa ON qa.questionusageid = qu.id and qa.maxmark > 0
                 JOIN ' . ConnectionProperty::$prefijo . 'question q ON qa.questionid = q.id
                 JOIN ' . ConnectionProperty::$prefijo . 'question_attempt_steps qas ON qas.questionattemptid = qa.id and qas.state <> "'."todo".'" and qas.state <> "'."complete".'"
                 LEFT JOIN ' . ConnectionProperty::$prefijo . 'question_attempt_step_data qasd ON qasd.attemptstepid = qas.id 
-                ORDER BY us.username,quiza.quiz, quiza.attempt, qa.slot, qas.timecreated, qu.id, qas.sequencenumber, qasd.name limit 220;';
+                ORDER BY us.username,quiza.quiz, quiza.attempt, qa.slot, qas.timecreated, qu.id, qas.sequencenumber, qasd.name;';
         $sqlQuery = new SqlQuery($sql);
         //$sqlQuery->setNumber($idquiz);
         //$sqlQuery->setNumber($iduser);

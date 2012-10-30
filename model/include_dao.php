@@ -48,4 +48,6 @@ require_once('mysql/MantenedorMySqlDAO.class.php');
 require_once('dao/LogDAO.class.php');
 require_once('dto/Log.class.php');
 require_once('mysql/LogMySqlDAO.class.php');
+require_once('dto/Estudiante.class.php');
+require_once('dto/Respuesta.class.php');
 ?>
